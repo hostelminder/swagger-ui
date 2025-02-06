@@ -1,0 +1,1362 @@
+openapi: 3.0.3
+info:
+  title: Hostel Minder - OpenAPI 3.0
+  description: |-
+    Hostel Minder: Your All-in-One Solution for Seamless Hostel Management
+  termsOfService: https://hostelminder.in/terms/
+  contact:
+    email: hostelminder@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Hostel Minder
+  url: http://hostelminder.in
+tags:
+  - name: properties
+    description: Property Management - Add Properties, Owners, Access Roles, Rooms, and Beds
+    externalDocs:
+      description: Find out more
+      url: http://hostelminder.in
+  - name: tenants
+    description: Tenant Management and Add-Ons Handling
+    externalDocs:
+      description: Find out more
+      url: http://hostelminder.in
+  - name: payments
+    description: Tenant Invoices and Payment Management
+    externalDocs:
+      description: Find out more
+      url: http://hostelminder.in
+
+paths:
+  /properties:
+    get:
+      tags:
+        - properties
+      summary: Feteches Properties with Owners and Assigned Roles
+      description: Feteches Properties with Owners and Assigned Roles
+      operationId: getProperties
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - properties
+      summary: Creates property details
+      description: Create property details
+      operationId: createProperty
+      requestBody:
+        description: Update property
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Property'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+  
+  /properties/{propertyId}:
+    get:
+      tags:
+        - properties
+      summary: Find Property by ID
+      description: Find Property by ID
+      operationId: getPropertyByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - properties
+      summary: Updates a property by ID
+      description: Updates a property by ID
+      operationId: updatePropertyById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      requestBody:
+        description: Update property
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Property'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - properties
+      summary: Deletes a property by ID
+      description: Deletes a property by ID
+      operationId: deletePropertyById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+
+  /properties/{propertyId}/owners:
+    get:
+      tags:
+        - properties
+      summary: Feteches Property owners
+      description: Feteches Property owners
+      operationId: getPropertyOwners
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyOwner'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - properties
+      summary: Create property owner
+      description: Create property owner
+      operationId: createPropertyOwner
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      requestBody:
+        description: Property owner details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyOwner'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyOwner'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+          
+  /properties/{propertyId}/owners/{propertyOwnerId}:
+    get:
+      tags:
+        - properties
+      summary: Find Property owner by ID
+      description: Find Property owner by ID
+      operationId: getPropertyOwnerByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/PropertyOwnerIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyOwner'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - properties
+      summary: Updates a property owner by ID
+      description: Updates a property owner by ID
+      operationId: updatePropertyOwnerById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/PropertyOwnerIdPathParam'
+      requestBody:
+        description: Update property owner
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyOwner'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyOwner'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - properties
+      summary: Deletes a property owner by ID
+      description: Deletes a property owner by ID
+      operationId: deletePropertyOwnerById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/PropertyOwnerIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+  
+  /properties/{propertyId}/rooms:
+    get:
+      tags:
+        - properties
+      summary: Find rooms of a property
+      description: Find rooms of a property
+      operationId: getRooms
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - properties
+      summary: Create a room
+      description: Create a room
+      operationId: createRoom
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      requestBody:
+        description: Create a room
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+          
+  /properties/{propertyId}/rooms/{roomId}:
+    get:
+      tags:
+        - properties
+      summary: Find a room by ID
+      description: Find room by ID
+      operationId: getRoomByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - properties
+      summary: Updates a room by ID
+      description: Updates a room by ID
+      operationId: updateRoomById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+      requestBody:
+        description: Update room
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - properties
+      summary: Deletes a room by ID
+      description: Deletes a room by ID
+      operationId: deleteRoomById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+
+  /properties/{propertyId}/rooms/{roomId}/beds:
+    get:
+      tags:
+        - properties
+      summary: Find beds of a room
+      description: Find beds of a room
+      operationId: getBeds
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bed'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - properties
+      summary: Create a bed
+      description: Create a bed
+      operationId: createBed
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+      requestBody:
+        description: Create a bed
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bed'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bed'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+
+  /properties/{propertyId}/rooms/{roomId}/beds/{bedId}:
+    get:
+      tags:
+        - properties
+      summary: Find a bed by ID
+      description: Find bed by ID
+      operationId: getBedByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+        - $ref: '#/components/parameters/BedIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bed'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - properties
+      summary: Updates a bed by ID
+      description: Updates a bed by ID
+      operationId: updateBedById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+        - $ref: '#/components/parameters/BedIdPathParam'
+      requestBody:
+        description: Update bed
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bed'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bed'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - properties
+      summary: Deletes a bed by ID
+      description: Deletes a bed by ID
+      operationId: deleteBedById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/RoomIdPathParam'
+        - $ref: '#/components/parameters/BedIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+
+  /properties/{propertyId}/addons:
+    get:
+      tags:
+        - properties
+      summary: Find addons of a property
+      description: Find addons of a property
+      operationId: getAddons
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Addon'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - properties
+      summary: Create a addon
+      description: Create a addon
+      operationId: createAddon
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      requestBody:
+        description: Create a addon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Addon'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Addon'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+          
+  /properties/{propertyId}/addons/{addonId}:
+    get:
+      tags:
+        - properties
+      summary: Find a addon by ID
+      description: Find addon by ID
+      operationId: getAddonByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/AddonIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Addon'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - properties
+      summary: Updates a addon by ID
+      description: Updates a addon by ID
+      operationId: updateAddonById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/AddonIdPathParam'
+      requestBody:
+        description: Update addon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Addon'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Addon'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - properties
+      summary: Deletes a addon by ID
+      description: Deletes a addon by ID
+      operationId: deleteAddonById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/AddonIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+          
+  /properties/{propertyId}/tenants:
+    get:
+      tags:
+        - tenants
+      summary: Fetches tenants associated with the property
+      description: Fetches tenants associated with the property
+      operationId: getTenants
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/PaymentStatusQueryParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tenant'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - tenants
+      summary: Creates a tenant within the property
+      description: Creates a tenant within the property
+      operationId: createTenant
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      requestBody:
+        description: Tenant details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+          
+  /properties/{propertyId}/tenants/{tenantId}:
+    get:
+      tags:
+        - tenants
+      summary: Fetch a Tenant by ID
+      description: Fetch a Tenant by ID
+      operationId: getTenantByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/TenantIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    put:
+      tags:
+        - tenants
+      summary: Updates a Tenant by ID
+      description: Updates a Tenant by ID
+      operationId: updateTenantById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/TenantIdPathParam'
+      requestBody:
+        description: Update tenant
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - tenants
+      summary: Deletes a tenant by ID
+      description: Deletes a tenant by ID
+      operationId: deleteTenantById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/TenantIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+
+  /properties/{propertyId}/invoices:
+    get:
+      tags:
+        - payments
+      summary: Fetch a invoice of tenant
+      description: Fetch a invoice of tenant
+      operationId: getInvoice
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/TenantIdQueryParam'
+        - $ref: '#/components/parameters/PaymentStatusQueryParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - payments
+      summary: Generates a invoice for a tenant
+      description: Generates a invoice for a tenant
+      operationId: createInvoice
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+      requestBody:
+        description: Generates a invoice
+        content:
+          application/json: {}
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+  
+  /properties/{propertyId}/invoices/{invoiceId}:
+    get:
+      tags:
+        - payments
+      summary: Fetch a invoice by ID
+      description: Fetch a invoice by ID
+      operationId: getInvoiceByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/InvoiceIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - tenants
+      summary: Deletes a invoice by ID
+      description: Deletes a invoice by ID
+      operationId: deleteInvoiceById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/InvoiceIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+
+  /properties/{propertyId}/invoices/{invoiceId}/payments:
+    get:
+      tags:
+        - payments
+      summary: Fetch a payment details
+      description: Fetch a payment details
+      operationId: getInvoicePayments
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/InvoiceIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - payments
+      summary: Adds a payment for a invoice
+      description: Adds a payment for a invoice
+      operationId: createInvoicePayment
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/InvoiceIdPathParam'
+      requestBody:
+        description: Generates a invoice
+        content:
+          application/json: {}
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+          
+  /properties/{propertyId}/invoices/{invoiceId}/payments/{paymentId}:
+    put:
+      tags:
+        - payments
+      summary: Update a payment by ID
+      description: Update a payment by ID
+      operationId: updateInvoicePayment
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/InvoiceIdPathParam'
+        - $ref: '#/components/parameters/PaymentIdPathParam'
+      requestBody:
+        description: Generates a invoice
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+  
+  /properties/{propertyId}/payments/{paymentId}:
+    get:
+      tags:
+        - payments
+      summary: Fetch a payment by ID
+      description: Fetch a payment by ID
+      operationId: getPaymentByID
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/PaymentIdPathParam'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: Invalid input
+        '403':
+          description: Access to the requested resource is forbidden
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - payments
+      summary: Deletes a payment by ID
+      description: Deletes a payment by ID
+      operationId: deletePaymentById
+      parameters:
+        - $ref: '#/components/parameters/PropertyIdPathParam'
+        - $ref: '#/components/parameters/PaymentIdPathParam'
+      responses:
+        '400':
+          description: Invalid property value
+
+components:
+  parameters:
+    PropertyIdPathParam:
+      name: propertyId
+      in: path
+      required: true
+      description: "The unique identifier for the property"
+      schema:
+        type: integer
+        format: int64
+    PropertyOwnerIdPathParam:
+      name: propertyOwnerId
+      in: path
+      required: true
+      description: "The unique identifier for the property owner"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    RoomIdPathParam:
+      name: roomId
+      in: path
+      required: true
+      description: "The unique identifier for the room"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    BedIdPathParam:
+      name: bedId
+      in: path
+      required: true
+      description: "The unique identifier for the bed"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    AddonIdPathParam:
+      name: addonId
+      in: path
+      required: true
+      description: "The unique identifier for the addon"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    TenantIdPathParam:
+      name: tenantId
+      in: path
+      required: true
+      description: "The unique identifier for the tenant"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    InvoiceIdPathParam:
+      name: invoiceId
+      in: path
+      required: true
+      description: "The unique identifier for the invoice"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    PaymentIdPathParam:
+      name: paymentId
+      in: path
+      required: true
+      description: "The unique identifier for the payment"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    TenantIdQueryParam:
+      name: tenantId
+      in: query
+      required: false
+      description: "The unique identifier for the tenant"
+      schema:
+        type: string
+        format: uuid
+        pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"  # UUID format
+    PaymentStatusQueryParam:
+      name: paymentStatus
+      in: query
+      required: false
+      description: "Fetch tenants based on payment status"
+      schema:
+        type: string
+        enum:
+          - pending
+          - paid
+          - overdue
+          - canceled
+  
+  schemas:
+    Property:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        propertyOwners:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyOwner'
+          minItems: 1  # Ensure at least one item is present in the array
+      required:
+        - name
+        - address
+        - propertyOwners
+  
+    PropertyOwner:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+          example: "test@email.com"
+        password:
+          type: string
+          format: password  # Indicates this is a password field
+          minLength: 8      # Optional: Enforce a minimum length for the password
+          example: "mySecureP@ssw0rd"
+        role:
+          type: string
+          enum:
+            - admin
+            - supervisor
+            - editor
+            - viewer
+        phoneNumber:
+          type: string
+          pattern: "^(\\+91|91)?[789]{1}[0-9]{9}$"  # International phone number pattern
+          example: "+91 8812131415"
+        propertyID:
+          type: integer
+          format: int64
+          example: 10
+      required:
+        - name
+        - email
+        - password
+        - role
+        - phoneNumber
+  
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        streetAddress:
+          type: string
+          example: "Mindspace IT Park, Madhapur"
+        landmark:
+          type: string
+          example: "Near IKEA"
+        locality:
+          type: string
+          example: "HITEC City"
+        city:
+          type: string
+          example: "Hyderabad"
+        state:
+          type: string
+          enum:
+            - Andhra Pradesh
+            - Arunachal Pradesh
+            - Assam
+            - Bihar
+            - Chhattisgarh
+            - Goa
+            - Gujarat
+            - Haryana
+            - Himachal Pradesh
+            - Jharkhand
+            - Karnataka
+            - Kerala
+            - Madhya Pradesh
+            - Maharashtra
+            - Manipur
+            - Meghalaya
+            - Mizoram
+            - Nagaland
+            - Odisha
+            - Punjab
+            - Rajasthan
+            - Sikkim
+            - Tamil Nadu
+            - Telangana
+            - Tripura
+            - Uttar Pradesh
+            - Uttarakhand
+            - West Bengal
+            - Andaman and Nicobar Islands
+            - Chandigarh
+            - Dadra and Nagar Haveli and Daman and Diu
+            - Lakshadweep
+            - Delhi
+            - Puducherry
+          example: "Telangana"
+        postalCode:
+          type: string
+          pattern: "^[1-9][0-9]{5}$"
+          example: "500081"
+        country:
+          type: string
+          enum: ["India"]
+          example: "India"
+        propertyID:
+          type: integer
+          format: int64
+      required:
+        - streetAddress
+        - city
+        - state
+        - postalCode
+        - country
+  
+    Room:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        roomNumber:
+          type: integer
+          format: int
+        roomType: # Indicates the type of the room like Deluxe, Suite, and Single
+          type: string
+          example: "Suite"
+        propertyID:
+          type: integer
+          format: int64
+        beds:
+          type: array
+          items:
+            $ref:  '#/components/schemas/Bed'
+      required:
+        - roomNumber
+  
+    Bed:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        bedNumber:
+          type: integer
+          format: int
+        price:
+          type: number
+          format: float  # Allows for decimal numbers, like 19.99
+          example: 5000.00
+        propertyID:
+          type: integer
+          format: int64
+        roomId:
+          type: string
+          format: uuid
+        available:
+          type: boolean
+          example: true
+        location:
+          type: string # Indicates the location of the bed within the room
+          example: "window side"
+      required:
+        - bedNumber
+        - roomId
+    
+    Addon:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string  # Name of the addon (e.g., wifi, laundry)
+          description: "The name of the service or feature provided as an addon."
+          example: "wifi"
+        price:
+          type: number
+          format: float  # Represents the price of the addon
+          description: "The price of the addon."
+          example: 500  # Example price (e.g., $5.99)
+        propertyID:
+          type: integer
+          format: int64
+      required:
+        - name
+        - price
+        
+    Tenant:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+          example: "test@email.com"
+        phoneNumber:
+          type: string
+          pattern: "^(\\+91|91)?[789]{1}[0-9]{9}$"  # International phone number pattern
+          example: "+91 8812131415"
+        propertyID:
+          type: integer
+          format: int64
+          example: 10
+        roomId:
+          type: string
+          format: uuid
+        bedId:
+          type: string
+          format: uuid
+        addons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Addon'
+        price:
+          type: number
+          format: float  # Represents the price of the bed
+          description: "The price of the bed."
+          example: 5000  # Example price (e.g., $5000)
+      required:
+        - name
+        - email
+        - phoneNumber
+        - roomId
+        - bedId
+        
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        propertyID:
+          type: integer
+          format: int64
+          example: 10
+        tenantId:
+          type: string
+          format: uuid
+        issueDate:
+          type: string
+          format: date-time
+          example: 2025-02-06T17:32:28Z
+        dueDate:
+          type: string
+          format: date-time
+          example: 2025-02-15T17:32:28Z
+        total_amount:
+          type: number
+          format: float
+          description: "The price of the bed+addons"
+          example: 7000  # Example price (e.g., $7000)
+        status:
+          type: string
+          enum:
+            - pending
+            - paid
+            - overdue
+            - canceled
+      required:
+        - tenantId
+
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        propertyID:
+          type: integer
+          format: int64
+          example: 10
+        tenantId:
+          type: string
+          format: uuid
+        invoiceId:
+          type: string
+          format: uuid
+        paymentDate:
+          type: string
+          format: date-time
+          example: 2025-02-15T17:32:28Z
+        paymentAmount:
+          type: number
+          format: float
+          description: "The amount paid"
+          example: 7000  # Example price (e.g., $7000)
+        paymentMethod:
+          type: string
+          enum:
+            - upi
+            - card
+            - bank_transfer
+            - cash
+      required:
+        - tenantId
